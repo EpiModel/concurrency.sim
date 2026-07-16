@@ -79,9 +79,9 @@ ui <- (fluidPage(
          illustrate the impact of sexual partnership concurrency on transmission dynamics.
          The theory and mathematics of this model are provided in the full ",
                    a("Concurrency Tutorial",
-                     href = "https://statnet.csde.washington.edu/trac/wiki/ConcurrencyIndex"),
+                     href = "https://statnet.org/ConcurrencyExercise/"),
                    " associated with this web application. This model is also built into the",
-                   a("EpiModel", href = "http://cran.r-project.org/web/packages/EpiModel/index.html"),
+                   a("EpiModel", href = "http://epimodel.org"),
                    " software available for the R statistical computing platform.", style = "margin-top: 25px"),
                  p("HIV infection is simulated based on a four-stage disease progression model
            in which persons transition from acute to latent to pre-AIDS to AIDS stages.
