@@ -304,7 +304,7 @@ ui <- fluidPage(
       rel = "stylesheet"
     ),
     tags$style(HTML("
-      html { font-size: 16px; }
+      html { font-size: 13.6px; }
       body {
         font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         font-size: 1rem; color: #444; background-color: #f0f5f9;
@@ -344,6 +344,12 @@ ui <- fluidPage(
         padding: 1.5rem !important;
       }
       .control-label { font-weight: 600; font-size: 1.0rem; color: #3a6f99; margin-bottom: 0.25rem; }
+      /* Compact Bootstrap form controls (px-based, so size them in rem to follow the root) */
+      .form-control, .selectize-input, .selectize-dropdown { font-size: 0.9rem; }
+      .btn { font-size: 0.9rem; }
+      .help-block { font-size: 0.85rem; }
+      .irs--shiny .irs-min, .irs--shiny .irs-max,
+      .irs--shiny .irs-single, .irs--shiny .irs-from, .irs--shiny .irs-to { font-size: 0.8rem; }
       .irs--shiny .irs-bar { background: #4682B4; border-top: 1px solid #3a6f99; border-bottom: 1px solid #3a6f99; }
       .irs--shiny .irs-single, .irs--shiny .irs-from, .irs--shiny .irs-to { background-color: #4682B4; }
       .irs--shiny .irs-handle { border: 1px solid #4682B4; }
