@@ -1,7 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.Ruserdata
 *.Rproj
-
-*.dcf
 .DS_Store
+site/

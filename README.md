@@ -1,24 +1,27 @@
-# concurrency.sim
+# Concurrency and HIV Transmission
 
-**concurrency.sim** is an R package that contains a microsimulation model for the effects of sexual partner concurrency on HIV-1 transmission dynamics. It provides a limited set of analysis and plotting tools, as well as a built-in Shiny application, to explore concurrency within a heterosexual population at risk.
+An interactive Shiny app that shows how sexual partnership concurrency shapes HIV-1 transmission in a heterosexual population. It is a companion to the [Concurrency Tutorial](https://epimodel.github.io/ConcurrencyTutorial) and part of the broader [EpiModel](https://www.epimodel.org/) ecosystem.
 
-<img src="https://github.com/statnet/concurrency.sim/raw/master/inst/ConcEx.png">
+Available at: https://epimodel.github.io/concurrency.sim
 
-You can run the Shiny app locally, or online from the shinyapps.io server in your web browser.
+## The idea
 
-### Local Installation
-The package is hosted on Github. It can be installed using the <a href="https://github.com/hadley/devtools" target="_blank">devtools package</a>:
-```r
-if (!require("remotes")) install.packages("remotes")
-remotes::install_github("statnet/concurrency.sim")
-```
+Concurrency means holding more than one sexual partnership at the same time. The app runs a stochastic microsimulation of an HIV epidemic and lets you switch concurrency on or off for each sex while holding everything else fixed, so the effect of concurrency alone can be read off the prevalence curves. Allowing overlapping partnerships opens faster transmission paths through the network, so prevalence rises even when the mean number of partners and the average partnership duration are unchanged.
 
-Then, to start the built-in Shiny application on your local machine, load the package and run the `concweb` function.
-```r
-library(concurrency.sim)
-concweb()
-```
-<img src="https://github.com/statnet/concurrency.sim/raw/master/inst/ShinySS.png">
+HIV progresses through four stages (acute, latent, pre-AIDS, AIDS) at fixed intervals, and the per-step transmission probability depends on the infected partner's stage: highest during acute infection and zero in AIDS, following [Hollingsworth (2008)](https://www.ncbi.nlm.nih.gov/pubmed/18662132).
 
-### Online Shiny App
-This app is also hosted online at [shinyapps.io](https://statnet.shinyapps.io/ConcurrencySim/).  Connecting via the shinyapps.io server allows you to run the app in your web browser without having to install `R` or this `concurrency.sim` package on your computer.
+## Using the app
+
+Set the initial population and epidemic parameters in the sidebar, choose a concurrency rule (none, women only, men only, or both sexes), and press Run Model. A momentary-degree cap of one enforces monogamy, so mean degree can exceed one only when both sexes are allowed concurrency. The main panel plots female and male prevalence over time across the simulations, with a mean line and a quantile band, and reports the final and peak prevalence. The graphical controls below the plot adjust the display without rerunning the model.
+
+## Authors
+
+- Steven M. Goodreau, University of Washington
+- Samuel M. Jenness, Emory University
+- Martina Morris, University of Washington
+
+See the full EpiModel team at [epimodel.org/team](https://www.epimodel.org/team.html).
+
+## About
+
+This app is part of the [EpiModel](https://www.epimodel.org/) ecosystem and is built with [Shiny](https://shiny.posit.co/) and [shinylive](https://posit-dev.github.io/r-shinylive/), which runs the model entirely in the browser with no server. It is released under the GPL-3 license, consistent with the EpiModel ecosystem.
