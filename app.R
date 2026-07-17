@@ -79,7 +79,7 @@ ui <- (fluidPage(
          illustrate the impact of sexual partnership concurrency on transmission dynamics.
          The theory and mathematics of this model are provided in the full ",
                    a("Concurrency Tutorial",
-                     href = "https://statnet.org/ConcurrencyExercise/"),
+                     href = "https://epimodel.github.io/ConcurrencyTutorial"),
                    " associated with this web application. This model is also built into the",
                    a("EpiModel", href = "http://epimodel.org"),
                    " software available for the R statistical computing platform.", style = "margin-top: 25px"),
