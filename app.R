@@ -273,7 +273,7 @@ conc_label <- function(conc) {
     "Both Sexes Concurrency"  = "concurrency in both sexes")
 }
 
-recap_items <- function(x, conc) {
+recap_items <- function(x, conc, md) {
   df <- do.call("cbind", x)
   dfF <- df[, which(colnames(df) == "femlPrev"), drop = FALSE]
   dfM <- df[, which(colnames(df) == "malePrev"), drop = FALSE]
@@ -283,13 +283,15 @@ recap_items <- function(x, conc) {
   peak <- max(rowMeans((dfF + dfM) / 2))
 
   list(
-    HTML(sprintf("Scenario: <strong>%s</strong>, across %d simulation%s.",
-                 conc_label(conc), length(x), if (length(x) == 1) "" else "s")),
+    HTML(sprintf("Scenario: <strong>%s</strong>, mean degree <strong>%.2f</strong>, across %d simulation%s.",
+                 conc_label(conc), md, length(x), if (length(x) == 1) "" else "s")),
     HTML(sprintf("Final HIV prevalence: <strong>%.1f%%</strong> in women and <strong>%.1f%%</strong> in men.",
                  100 * finalF, 100 * finalM)),
     HTML(sprintf("Final overall prevalence: <strong>%.1f%%</strong>; peak reached along the way: <strong>%.1f%%</strong>.",
                  100 * overall, 100 * peak)),
-    HTML("Hold every other parameter fixed and switch the concurrency rule: allowing overlapping partnerships opens faster transmission paths through the network, so prevalence rises even though mean degree and partnership duration are unchanged.")
+    # Interpretation shown only once concurrency is on, so it does not give away the comparison
+    if (conc != "No Concurrency")
+      HTML("Compared with no concurrency at the same mean degree and partnership duration, overlapping partnerships open faster transmission paths through the network.")
   )
 }
 
@@ -453,6 +455,7 @@ ui <- fluidPage(
 
       div(class = "sidebar-section", "Epidemic parameters"),
       sliderInput("md", "Mean degree", min = 0.5, max = 1, value = 0.8, step = 0.05),
+      helpText("Average number of ongoing partnerships per person at any moment."),
       sliderInput("dur", "Mean partnership duration (months)", min = 1, max = 50, value = 10, step = 1),
       selectInput("conc", "Concurrency rule",
                   choices = c("No Concurrency", "Female Only Concurrency",
@@ -570,6 +573,7 @@ server <- function(input, output, session) {
       monog.f = mF, monog.m = mM, meandeg = md, part.duration = dur,
       nsteps = nst, nsims = nsm, verbose = FALSE, updateProgress = updateProgress)
     attr(model, "conc") <- cc
+    attr(model, "md") <- md
     model
   })
 
@@ -583,7 +587,7 @@ server <- function(input, output, session) {
 
   output$recap <- renderUI({
     model <- sim()
-    tags$ul(lapply(recap_items(model, attr(model, "conc")), function(z) tags$li(z)))
+    tags$ul(lapply(Filter(Negate(is.null), recap_items(model, attr(model, "conc"), attr(model, "md"))), function(z) tags$li(z)))
   })
 }
 
