@@ -30,8 +30,11 @@ jobs:
         shell: Rscript {0}
 
       - name: Export shinylive app
+        # Pinned on purpose. Assets 0.10.5 and later (webR with R 4.5/4.6) overflow
+        # Safari's call stack inside renderPlot, so the plot never renders there.
+        # 0.10.4 (R 4.4.1, shiny 1.9.1) is the newest release that works in Safari.
         run: |
-          shinylive::export(".", "site")
+          shinylive::export(".", "site", assets_version = "0.10.4")
         shell: Rscript {0}
 
       - name: Upload Pages artifact
